@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # Build from cpp applications 
 cppsolutions/*/build 
+
+tempinput.txt
