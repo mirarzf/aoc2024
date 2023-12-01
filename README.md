@@ -8,9 +8,7 @@ In order to do so, you can look at the [C++ solutions](#c-solutions) or the [Pyt
 To make the different solutions work, don't forget to put your input in the input folder with the name `day02.txt` if your input is for the puzzle of day 2. (The input texts that are already present are simple copy/paste of my own inputs.)
 
 ## C++ Solutions 
-The C++ solutions are available in the folder `cppsolutions`. The code for each solution is available in the folder corresponding to the day. Use the Makefile for the compilation of the solution in the corresponding folder. 
-
-Please ignore the files `solve.cpp`, `Dailypuzzle.cpp`, `Dailypuzzle.hpp` and `Makefile` in `cpp_solutions` as they mostly serve as templates for each daily solution. Compiling `solve.cpp` will most probably end up raising an error. 
+The C++ solutions are available in the folder `cppsolutions`. The code for each solution is available in the folder corresponding to the day. 
 
 ## Python Solutions 
 The Python solutions are available in the folder `pysolutions`. The code for each solution is available in the folder corresponding to the day. Each `solve` function for each day corresponds to 
