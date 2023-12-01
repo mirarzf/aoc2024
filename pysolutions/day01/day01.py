@@ -5,8 +5,7 @@ def solve(inputfile, puzzlepart):
     digits = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven':7, 'eight':8, 'nine':9}
     digits=['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 
-    sumFirstDigits = 0 
-    sumLastDigits = 0 
+    sumDigits = 0 
     lastDigit = 0
     for line in lines: 
         first = True 
@@ -25,8 +24,6 @@ def solve(inputfile, puzzlepart):
                             first = False 
                         lastDigit = index+1 
 
-        sumFirstDigits += firstDigit
-        sumLastDigits += lastDigit
-        print(line, firstDigit, lastDigit)
+        sumDigits += firstDigit*10+lastDigit
     
-    return sumFirstDigits*10+sumLastDigits
+    return sumDigits
