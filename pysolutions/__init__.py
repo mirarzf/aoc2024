@@ -1,0 +1,1 @@
+from .dailypuzzle import Dailypuzzle
