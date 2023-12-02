@@ -8,7 +8,7 @@ inputfolder = Path('./input')
 
 def get_args():
     parser = argparse.ArgumentParser(description='Choose the day problem and input')
-    parser.add_argument('--day', metavar='DAY', type=int, help='Day number of the problem to solve.')
+    parser.add_argument('day', metavar='DAY', type=int, help='Day number of the problem to solve.')
     parser.add_argument('--part', '-p', metavar='PART', type=int, choices=[1, 2], help='Part of the problem to solve. ' 
                         'Will give solution to both parts if not specified.')
     parser.add_argument('--input', '-i', metavar='INPUT', type=str, help='Input filename. Must be txt.')
