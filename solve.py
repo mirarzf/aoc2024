@@ -1,13 +1,14 @@
 import argparse
+import sys 
 from pathlib import Path
 
 from pysolutions import Dailypuzzle
 
-inputfolder = Path('./input')
+inputfolder = Path('./input') 
 
 def get_args():
     parser = argparse.ArgumentParser(description='Choose the day problem and input')
-    parser.add_argument('day', metavar='DAY', type=int, help='Day number of the problem to solve.')
+    parser.add_argument('--day', metavar='DAY', type=int, help='Day number of the problem to solve.')
     parser.add_argument('--part', '-p', metavar='PART', type=int, choices=[1, 2], help='Part of the problem to solve. ' 
                         'Will give solution to both parts if not specified.')
     parser.add_argument('--input', '-i', metavar='INPUT', type=str, help='Input filename. Must be txt.')
@@ -16,6 +17,8 @@ def get_args():
 
 if __name__ == '__main__': 
     args = get_args()
+    if args.day == None:
+        args.day = int(input("Please enter a day number here: "))
     if args.input == None: 
         inputfile = Path(inputfolder / f'day{args.day:02d}.txt')
     else: 

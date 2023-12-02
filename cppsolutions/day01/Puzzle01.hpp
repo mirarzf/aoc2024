@@ -1,3 +1,6 @@
+#ifndef DEF_PUZZLE01
+#define DEF_PUZZLE01
+
 #include <string>
 
 class Puzzle01 {
@@ -12,3 +15,5 @@ class Puzzle01 {
     // Getters 
     std::string getSolution(int puzzlepart); 
 }; 
+
+#endif 
