@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/mirar/Documents/CodingProjects/aoc2023/cppsolutions/day02",
-      "program": "c:/Users/mirar/Documents/CodingProjects/aoc2023/cppsolutions/day02/build/Debug/outDebug",
+      "cwd": "c:/Users/mirar/Documents/CodingProjects/aoc2023/cppsolutions/day03",
+      "program": "c:/Users/mirar/Documents/CodingProjects/aoc2023/cppsolutions/day03/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
