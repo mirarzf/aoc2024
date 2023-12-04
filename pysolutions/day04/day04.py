@@ -29,15 +29,12 @@ def solve(inputfile, puzzlepart):
             else: 
                 somme += 2**(winpower-1)
 
-    print("WPLIST", winpowerlist)    
     nbOfCards = [1]*len(winpowerlist)
-    print("NBCARDS", nbOfCards)
     
     if puzzlepart == 2: 
         for i, wp in enumerate(winpowerlist): 
             for j in range(wp): 
                 nbOfCards[i+j+1] += nbOfCards[i]
-            print(i+1, wp, nbOfCards)
         somme = sum(nbOfCards)
 
     return somme 
