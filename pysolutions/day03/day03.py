@@ -93,5 +93,3 @@ def solve(inputfile, puzzlepart):
         for symbol in symbols: 
             if symbol[1] == '*': 
                 sum += getGearRatio(ncol, nrow, schematic, engineParts, symbol)
-                
-    return sum
