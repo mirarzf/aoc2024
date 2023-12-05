@@ -52,7 +52,7 @@ string Puzzle05::getSolution(int puzzlepart) {
     unsigned mini; 
     for (unsigned i = 0; i < seeds.size(); i++) { 
         if (seeds[i] < mini) { 
-            
+            mini = seeds[i]: 
         }
     }
 
