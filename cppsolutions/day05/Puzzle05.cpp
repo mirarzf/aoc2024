@@ -18,14 +18,14 @@ Puzzle05::Puzzle05(string newinput) {
 
 // Getters 
 string Puzzle05::getSolution(int puzzlepart) {
-    vector<int> seeds = {}; 
+    vector<long long unsigned int> seeds = {}; 
     stringstream ssInput(input); 
     string seedsline; 
     getline(ssInput, seedsline, ':'); 
     getline(ssInput, seedsline); 
     stringstream ssSeeds(seedsline); 
     while (ssSeeds.good()) { 
-        int nb; 
+        long long unsigned int nb; 
         ssSeeds >> nb; 
         seeds.push_back(nb); 
     }; 
@@ -49,7 +49,7 @@ string Puzzle05::getSolution(int puzzlepart) {
     for (unsigned i = 0; i < mapsPtr.size(); i++) { 
         seeds = mapsPtr[i]->getDestNbs(seeds); 
     }; 
-    int mini = seeds[0]; 
+    long long unsigned int mini = seeds[0]; 
     for (unsigned i = 0; i < seeds.size(); i++) { 
         if (seeds[i] < mini) { 
             mini = seeds[i]; 

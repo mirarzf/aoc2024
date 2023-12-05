@@ -24,7 +24,7 @@ Map::Map(string input) {
         getline(ssInput, line); 
         if (line.size() > 0) {
             stringstream ssLine(line); 
-            int nb; 
+            long long unsigned int nb; 
             ssLine >> nb; 
             destStarts.push_back(nb); 
             ssLine >> nb; 
@@ -37,10 +37,10 @@ Map::Map(string input) {
 
 // Getters 
 
-vector<int> Map::getDestNbs(vector<int> sourceNbs) { 
-    vector<int> destNbs = {}; 
+vector<long long unsigned int> Map::getDestNbs(vector<long long unsigned int> sourceNbs) { 
+    vector<long long unsigned int> destNbs = {}; 
     for (unsigned j = 0; j < sourceNbs.size(); j++) {
-        int sourceNb = sourceNbs[j];  
+        long long unsigned int sourceNb = sourceNbs[j];  
         unsigned i = 0; 
         while (i < sourceStarts.size()) { 
             if (sourceNb > sourceStarts[i] && sourceNb < sourceStarts[i]+mapRanges[i]) { 

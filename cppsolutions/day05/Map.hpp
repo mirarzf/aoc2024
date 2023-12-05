@@ -8,9 +8,9 @@ class Map {
     private: 
     std::string sourceID; 
     std::string destID; 
-    std::vector<int> sourceStarts; 
-    std::vector<int> destStarts; 
-    std::vector<int> mapRanges; 
+    std::vector<long long unsigned int> sourceStarts; 
+    std::vector<long long unsigned int> destStarts; 
+    std::vector<long long unsigned int> mapRanges; 
 
     public:
 
@@ -19,7 +19,7 @@ class Map {
     Map(std::string input); 
 
     // Getters 
-    std::vector<int> getDestNbs(std::vector<int> sourceNbs);
+    std::vector<long long unsigned int> getDestNbs(std::vector<long long unsigned int> sourceNbs);
 }; 
 
 #endif 
