@@ -26,9 +26,9 @@ Map::Map(string input) {
             stringstream ssLine(line); 
             int nb; 
             ssLine >> nb; 
-            sourceStarts.push_back(nb); 
-            ssLine >> nb; 
             destStarts.push_back(nb); 
+            ssLine >> nb; 
+            sourceStarts.push_back(nb); 
             ssLine >> nb; 
             mapRanges.push_back(nb); 
         }; 
@@ -39,12 +39,18 @@ Map::Map(string input) {
 
 vector<int> Map::getDestNbs(vector<int> sourceNbs) { 
     vector<int> destNbs = {}; 
-    for (int sourceNb : sourceNbs) { 
-        for (unsigned i = 0; i < sourceStarts.size(); i++) { 
+    for (unsigned j = 0; j < sourceNbs.size(); j++) {
+        int sourceNb = sourceNbs[j];  
+        unsigned i = 0; 
+        while (i < sourceStarts.size()) { 
             if (sourceNb > sourceStarts[i] && sourceNb < sourceStarts[i]+mapRanges[i]) { 
                 destNbs.push_back(sourceNb + destStarts[i]-sourceStarts[i]); 
-            }
+            }; 
+            i++; 
         }; 
+        if (destNbs.size() == j) { 
+            destNbs.push_back(sourceNb); 
+        }
     }; 
     return destNbs; 
 }

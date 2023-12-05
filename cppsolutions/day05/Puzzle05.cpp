@@ -49,19 +49,19 @@ string Puzzle05::getSolution(int puzzlepart) {
     for (unsigned i = 0; i < mapsPtr.size(); i++) { 
         seeds = mapsPtr[i]->getDestNbs(seeds); 
     }; 
-    unsigned mini; 
+    int mini = seeds[0]; 
     for (unsigned i = 0; i < seeds.size(); i++) { 
         if (seeds[i] < mini) { 
-            mini = seeds[i]: 
-        }
-    }
+            mini = seeds[i]; 
+        }; 
+    }; 
 
     for (unsigned i = 0; i < mapsPtr.size(); i++) {
         delete mapsPtr[i]; 
     }; 
 
     if (puzzlepart == 1) {
-        return to_string(0); 
+        return to_string(mini); 
     } else { // puzzlepart == 2 
         return to_string(0); 
     }; 
