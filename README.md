@@ -1,9 +1,9 @@
-# Advent of Code 2023
-My C++ wannabe and Python solutions for the advent of code 2023. 
-Link of AoC 2023 puzzles here: [Advent of Code 2022](https://adventofcode.com/2023/)
+# Advent of Code 2024
+My C++ wannabe and Python solutions for the advent of code 2024. 
+Link of AoC 2024 puzzles here: [Advent of Code 2024](https://adventofcode.com/2024/)
 
 ## How to use this repository? 
-This repository is mainly personal as I am learning while solving the daily puzzles from AoC 2023. You can use the solutions in this repository for comparison. 
+This repository is mainly personal as I am learning while solving the daily puzzles from AoC 2024. You can use the solutions in this repository for comparison. 
 In order to do so, you can look at the [C++ solutions](#c-solutions) or the [Python solutions](#python-solutions). 
 To make the different solutions work, don't forget to put your input in the input folder with the name `day02.txt` if your input is for the puzzle of day 2. (The input texts that are already present are simple copy/paste of my own inputs.)
 
