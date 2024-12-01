@@ -1,28 +1,16 @@
 def solve(inputfile, puzzlepart): 
     f = open(inputfile, 'r')
     lines = f.readlines()
+    f.close()
 
-    digits=['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+    first_list = []
+    second_list = []
 
-    sumDigits = 0 
-    lastDigit = 0
     for line in lines: 
-        first = True 
-        for i, e in enumerate(line): 
-            if ord(e) > 47 and ord(e) < 58: 
-                if first: 
-                    firstDigit = int(e)
-                    first = False 
-                lastDigit = int(e)
-        
-            if puzzlepart == 2: 
-                for index, digit in enumerate(digits): 
-                    if line[i:i+len(digit)] == digit: 
-                        if first: 
-                            firstDigit = index+1 
-                            first = False 
-                        lastDigit = index+1 
+        first, second = line.split(' ')
+        first_list.append(first)
+        second_list.append(second)
 
-        sumDigits += firstDigit*10+lastDigit
-    
-    return sumDigits
+    print(first_list, second_list)
+
+    return 0 
