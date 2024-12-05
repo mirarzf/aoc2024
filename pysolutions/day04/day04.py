@@ -64,6 +64,7 @@ def solve(inputfile, puzzlepart):
         for i in range(1,nrows-1): 
             for j in range(1, ncolumns-1): 
                 if grid[i][j] == 'A' and isCrossMAS(grid[i-1:i+2], j): 
-                    compteurXMAS += 1        
+                    compteurXMAS += 1       
+     
     return compteurXMAS
 
