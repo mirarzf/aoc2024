@@ -1,9 +1,10 @@
 import re 
 
 def isCrossMAS(grid, colIndex):     
-    concatenatedString = grid[0][colIndex-1] + grid[0][colIndex+1] + grid[2][colIndex-1] + grid[2][colIndex+1]
-    if len(re.findall("M", concatenatedString)) == 2 and len(re.findall("S", concatenatedString)) == 2 and len(re.findall(".MM.|.SS.", concatenatedString)) == 0: 
-        return True 
+    diag1 = ''.join(grid[1+i][colIndex+i] for i in range(-1,2))
+    diag2 = ''.join(grid[1+i][colIndex-i] for i in range(-1,2))
+    if len(re.findall("MAS|SAM", diag1)) == 1 and len(re.findall("MAS|SAM", diag2)): 
+        return True
     return False 
 
 def solve(inputfile, puzzlepart): 
