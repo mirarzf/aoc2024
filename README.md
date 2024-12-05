@@ -22,3 +22,8 @@ You can also specify the part (1 or 2) of a problem if you don't want all of the
 ```
 python solve.py 1 -p 1
 ``` 
+You can also specify the input .TXT file if it's in the input folder. 
+```
+python solve.py 1 -i text.txt
+python solve.py 1 -i day01.txt
+``` 
