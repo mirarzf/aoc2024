@@ -404,5 +404,3 @@ FodyWeavers.xsd
 cppsolutions/*/build 
 
 tempinput.txt
-
-input/*/day**.txt
