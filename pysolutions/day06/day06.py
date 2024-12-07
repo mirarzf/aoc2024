@@ -1,59 +1,59 @@
 import re 
 
+directions = ['T', 'R', 'B', 'L']
+
 def getColumn(grid, j): 
     return ''.join(grid[i][j] for i in range(len(grid)))
 
 def getLine(grid, i): 
     return grid[i]
 
-def getNextGuardPosition(grid, dir, i, j): 
-    if dir == 'T': 
+def getSignVandH(dir = 0): 
+    if dir == 0: # Top Direction 
         signV, signH = -1, 0
-    elif dir == 'B': 
+    elif dir == 1: # Right Direction 
+        signV, signH = 0, 1
+    elif dir == 2: # Bottom Direction 
         signV, signH = 1, 0 
-    if dir == 'L': 
-        signV, signH = 0, -1
-    elif dir == 'R': 
-        signV, signH = 0, 1 
+    else: # dir == 3: # Left Direction 
+        signV, signH = 0, -1 
+    
+    return signV, signH
 
-    if dir == 'T' or dir == 'B': 
+def getNextToVisit(grid, dir, i, j): 
+    signV, signH = getSignVandH(dir)
+
+    if dir % 2 == 0: 
         column = getColumn(grid, j)
-        if dir == 'T': 
-            lineInFrontOfGuard = ''.join([column[i-k] for k in range(1,i+1)])
+        if dir == 0: 
+            lineInFrontOfGuard = ''.join([column[i-k] for k in range(i+1)])
         else: 
-            lineInFrontOfGuard = column[i+1:]
+            lineInFrontOfGuard = column[i:]
     
     else: 
         row = getLine(grid, i)
-        if dir == 'L': 
-            lineInFrontOfGuard = ''.join(row[j-k] for k in range(1,j+1))
+        if dir == 3: 
+            lineInFrontOfGuard = ''.join(row[j-k] for k in range(j+1))
         else: 
-            lineInFrontOfGuard = row[j+1:]
+            lineInFrontOfGuard = row[j:]
     
-    indexNextGuardPos = 0 
-    while indexNextGuardPos < len(lineInFrontOfGuard) and lineInFrontOfGuard[indexNextGuardPos] != '#': 
-        indexNextGuardPos += 1 
+    indexNextObsPos = 1
+    nextToVisit = []
+    while indexNextObsPos < len(lineInFrontOfGuard) and lineInFrontOfGuard[indexNextObsPos] != '#': 
+        nextToVisit.append((i+signV*indexNextObsPos, j+signH*indexNextObsPos))
+        indexNextObsPos += 1 
     
-    return i+signV*indexNextGuardPos, j+signH*indexNextGuardPos
+    # return (i+signV*indexNextObsPos, j+signH*indexNextObsPos), nextToVisit
+    return nextToVisit
 
-def getNextDir(dir = 'T'): 
-    if dir == 'T': 
-        return 'R'
-    if dir == 'R': 
-        return 'B' 
-    if dir == 'B': 
-        return 'L' 
-    if dir == 'L': 
-        return 'T'
-
-def isGuardInArea(dir, lastpos, nrows, ncols): 
-    if dir == 'T' and lastpos[0] == 0: 
+def isGuardInArea(dir, posBeforeObs, nrows, ncols): 
+    if dir == 0 and posBeforeObs[0] == 0: 
         return False 
-    if dir == 'B' and lastpos[0] == nrows-1: 
+    if dir == 1 and posBeforeObs[1] == ncols-1: 
         return False 
-    if dir == 'L' and lastpos[1] == 0: 
+    if dir == 2 and posBeforeObs[0] == nrows-1: 
         return False 
-    if dir == 'R' and lastpos[1] == ncols-1: 
+    if dir == 3 and posBeforeObs[1] == 0: 
         return False 
     return True 
 
@@ -78,24 +78,48 @@ def solve(inputfile, puzzlepart):
     visited = [startPos]
 
     # Begin guard searching the area 
-    dir = 'T'
+    dir = 0
     inArea = True 
+    if puzzlepart == 2: 
+        dir_visits = [0]
     while inArea:
-        nextGuardPos = getNextGuardPosition(lines, dir, startPos[0], startPos[1])
+        nextToVisit = getNextToVisit(lines, dir, startPos[0], startPos[1])
         
         # Add all visited places by guard 
-        smallestI = min(startPos[0], nextGuardPos[0])
-        smallestJ = min(startPos[1], nextGuardPos[1])
-        iRange, jRange = range(abs(nextGuardPos[0]-startPos[0])+1), range(abs(nextGuardPos[1]-startPos[1])+1)
-        for ki in iRange: 
-            for kj in jRange: 
-                visited.append((smallestI+ki, smallestJ+kj))
-        
+        visited += nextToVisit
+        if puzzlepart == 2: 
+            dir_visits += [dir for i in range(len(nextToVisit))]
+
         # Check if guard is still in the area 
-        inArea = isGuardInArea(dir, nextGuardPos, nrows, ncols)
+        inArea = isGuardInArea(dir, visited[-1], nrows, ncols)
 
         # Update for next iteration 
-        startPos = nextGuardPos
-        dir = getNextDir(dir)
+        startPos = visited[-1]
+        dir = (dir+1)%4
     
-    return len(set(visited))
+            
+    if puzzlepart == 1: 
+        return len(set(visited))
+    
+    else: 
+        obstaclesList = []
+        for i in range(1,len(visited)): 
+            dir = dir_visits[i]
+            nextDir = dir%4
+            nextToVisit = [] 
+            while len(nextToVisit) == 0: 
+                nextDir = (nextDir+1)%4
+                nextToVisit = getNextToVisit(lines, nextDir, visited[i][0], visited[i][1])
+            posBeforeObs = nextToVisit[-1]
+            if isGuardInArea(nextDir, posBeforeObs, nrows, ncols): 
+                j = 0 
+                noLoop = True 
+                signV, signH = getSignVandH(dir)
+                obsToAdd = visited[i][0]+signV, visited[i][1]+signH
+                while j < i and noLoop: 
+                    if visited[j] == posBeforeObs and dir_visits[j] == nextDir: 
+                        obstaclesList.append(obsToAdd)
+                        noLoop = False 
+                    j+=1 
+        print(obstaclesList)
+        return len(set(obstaclesList))
