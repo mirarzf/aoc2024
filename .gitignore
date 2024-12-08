@@ -405,4 +405,4 @@ cppsolutions/*/build
 
 tempinput.txt
 
-input/*
+input/day**.txt
