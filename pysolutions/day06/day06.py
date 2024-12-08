@@ -37,7 +37,7 @@ def getNextToVisit(grid, dir, i, j):
         else: 
             lineInFrontOfGuard = row[j:]
     
-    indexNextObsPos = 1
+    indexNextObsPos = 0
     nextToVisit = []
     while indexNextObsPos < len(lineInFrontOfGuard) and lineInFrontOfGuard[indexNextObsPos] != '#': 
         nextToVisit.append((i+signV*indexNextObsPos, j+signH*indexNextObsPos))
@@ -57,13 +57,55 @@ def isGuardInArea(dir, posBeforeObs, nrows, ncols):
         return False 
     return True 
 
+def isThereALoop(visited, pastdirs): 
+    lastpos = visited[-1]
+    lastdir = pastdirs[-1]
+
+    for i in range(len(visited)-1): 
+        if visited[i] == lastpos and pastdirs[i] == lastdir: 
+            return True 
+    return False 
+
+def guardSearchUntilLoopOrOut(grid, startPos, startDir = 0, keepDirs = False): 
+    # Get number max of obstacles 
+    nbMaxOfObs = 0 
+    for line in grid: 
+        nbMaxOfObs += len(re.findall('#', line))
+    nbMaxOfObs = 4*nbMaxOfObs
+        
+    # Begin guard searching the area 
+    dir = startDir
+    inArea = True 
+    noLoop = True 
+    visited = [startPos]
+    dir_visits = [startDir]
+    nbOfObs = 0 
+    while inArea and noLoop: 
+        nextToVisit = getNextToVisit(grid, dir, startPos[0], startPos[1])
+        
+        # Add all visited places by guard 
+        visited += nextToVisit
+        if keepDirs: 
+            dir_visits += [dir for i in range(len(nextToVisit))]
+
+        # Check if guard is still in the area 
+        inArea = isGuardInArea(dir, visited[-1], len(grid), len(grid[0]))
+
+        if inArea: 
+            nbOfObs += 1 
+            noLoop = nbOfObs <= nbMaxOfObs 
+
+        # Update for next iteration 
+        startPos = visited[-1]
+        dir = (dir+1)%4
+    
+    return visited, dir_visits, noLoop
+
 def solve(inputfile, puzzlepart): 
     f = open(inputfile, 'r')
     lines = [line.rstrip('\n') for line in f.readlines()] 
     f.close()
     nrows, ncols = len(lines), len(lines[0])
-
-    directions = ['T', 'R', 'B', 'L']
 
     # Get guard's first position 
     i = 0 
@@ -78,48 +120,35 @@ def solve(inputfile, puzzlepart):
     visited = [startPos]
 
     # Begin guard searching the area 
-    dir = 0
-    inArea = True 
-    if puzzlepart == 2: 
-        dir_visits = [0]
-    while inArea:
-        nextToVisit = getNextToVisit(lines, dir, startPos[0], startPos[1])
-        
-        # Add all visited places by guard 
-        visited += nextToVisit
-        if puzzlepart == 2: 
-            dir_visits += [dir for i in range(len(nextToVisit))]
-
-        # Check if guard is still in the area 
-        inArea = isGuardInArea(dir, visited[-1], nrows, ncols)
-
-        # Update for next iteration 
-        startPos = visited[-1]
-        dir = (dir+1)%4
-    
-            
+    visited, dir_visits, noLoop = guardSearchUntilLoopOrOut(lines, startPos, 0, keepDirs=(puzzlepart==2))
+                
     if puzzlepart == 1: 
         return len(set(visited))
     
     else: 
-        obstaclesList = []
-        for i in range(1,len(visited)): 
-            dir = dir_visits[i]
-            nextDir = dir%4
-            nextToVisit = [] 
-            while len(nextToVisit) == 0: 
-                nextDir = (nextDir+1)%4
-                nextToVisit = getNextToVisit(lines, nextDir, visited[i][0], visited[i][1])
-            posBeforeObs = nextToVisit[-1]
-            if isGuardInArea(nextDir, posBeforeObs, nrows, ncols): 
-                j = 0 
-                noLoop = True 
-                signV, signH = getSignVandH(dir)
-                obsToAdd = visited[i][0]+signV, visited[i][1]+signH
-                while j < i and noLoop: 
-                    if visited[j] == posBeforeObs and dir_visits[j] == nextDir: 
-                        obstaclesList.append(obsToAdd)
-                        noLoop = False 
-                    j+=1 
-        print(obstaclesList)
-        return len(set(obstaclesList))
+        # Create list of eligible obstacles 
+        eligibleObstacles = []
+        for i in range(len(visited)): 
+            newStartPos = visited[i]
+            # Add obstacles to lines 
+            signV, signH = getSignVandH(dir_visits[i])
+            obsI, obsJ = newStartPos[0]+signV, newStartPos[1]+signH
+            if obsI != -1 and obsI != len(lines) and obsJ != -1 and obsJ != len(lines[0]) and lines[obsI][obsJ] == '.': 
+                eligibleObstacles.append((obsI, obsJ))
+
+        eligibleObstacles = set(eligibleObstacles)
+        obsCounter = 0 
+        for obs in eligibleObstacles: 
+            obsI, obsJ = obs[0], obs[1]
+            modLines = lines[:obsI]
+            newLine = lines[obsI][:obsJ]
+            newLine += '#'
+            newLine += lines[obsI][obsJ+1:]
+            modLines.append(newLine)
+            modLines += lines[obsI+1:]
+            nextVisited, nextDirs, noLoop = guardSearchUntilLoopOrOut(modLines, startPos, 0)
+
+            if not noLoop: 
+                obsCounter += 1
+
+        return obsCounter

@@ -4,7 +4,7 @@ import pysolutions.day03.day03
 import pysolutions.day04.day04
 import pysolutions.day05.day05
 import pysolutions.day06.day06
-# import pysolutions.day07.day07
+import pysolutions.day07.day07
 # import pysolutions.day08.day08
 # import pysolutions.day09.day09
 # import pysolutions.day10.day10
