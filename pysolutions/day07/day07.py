@@ -46,5 +46,3 @@ def solve(inputfile, puzzlepart):
             sommeOKlines += line[0]
 
     return sommeOKlines
-
-# 2654749936343 correct 
