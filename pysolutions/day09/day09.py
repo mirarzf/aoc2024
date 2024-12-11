@@ -14,7 +14,6 @@ def solve(inputfile, puzzlepart):
         i = 0 
         # checkprint = []
         while i < j: 
-            # print(i, j, line[i], line[j], len(line))
             fileID = 0 
             blockSizeLeft = int(line[i])
             if i%2 == 0: 
@@ -22,14 +21,12 @@ def solve(inputfile, puzzlepart):
                 fileID = i//2
                 while blockSizeLeft > 0: 
                     checksum += posI*fileID
-                    # checkprint.append(fileID)
                     posI += 1 
                     blockSizeLeft -= 1 
             else: # i%2 == 1 # on rajoute la valeur du fichier actuel qu'on regarde 
                 fileID = lastFileID
                 while blockSizeLeft > 0: 
                     checksum += posI*fileID 
-                    # checkprint.append(fileID)
                     posI += 1 
                     blockSizeLeft -= 1 
                     filesNotOrdered -= 1 
@@ -41,11 +38,9 @@ def solve(inputfile, puzzlepart):
             i += 1 
         while filesNotOrdered > 0: 
             checksum += posI*lastFileID 
-            # checkprint.append(fileID)
             posI += 1 
             blockSizeLeft -= 1 
             filesNotOrdered -= 1 
-        # print(checkprint)
     
     else: # puzzlepart == 2 
         # Keep a record of the filled spaces that were originally empty 
@@ -76,7 +71,6 @@ def solve(inputfile, puzzlepart):
                     if filesize <= emptySize: 
                         diskIndex += int(line[indexEmptySpace])-emptySize
                         for i in range(filesize): 
-                            print(fileID, diskIndex, checksum)
                             checksum += fileID*diskIndex
                             diskIndex += 1
                         actualEmptySizes[indexEmptySpace] -= filesize
