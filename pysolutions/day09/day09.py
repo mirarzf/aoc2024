@@ -60,7 +60,6 @@ def solve(inputfile, puzzlepart):
         if n%2 == 0: 
             lastDiskIndex -= int(line[-1])
         lastDiskIndex -= 1 
-        print(lastDiskIndex)
         
         # Check backwards the input line and put the last file ID in its best sorted place 
         checksum = 0 
@@ -88,7 +87,6 @@ def solve(inputfile, puzzlepart):
                 if noOrderChange: 
                     for i in range(filesize): 
                         checksum += fileID * (lastDiskIndex-i)
-                        print(fileID, lastDiskIndex-i, checksum)
             lastDiskIndex -= int(line[lineIdx])
             lineIdx -= 1 
     return checksum 
