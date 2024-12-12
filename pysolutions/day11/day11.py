@@ -35,6 +35,7 @@ def solve(inputfile, puzzlepart):
                     pierresActuelles[2024*e] = pierresPcdts[e]
         pierresPcdts = pierresActuelles
     
+    somme = 0 
     for key in pierresActuelles.keys(): 
         somme += pierresActuelles[key]
 
