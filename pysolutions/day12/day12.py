@@ -1,21 +1,23 @@
 import numpy as np 
 
 def getNeighboursAndNewFences(i, j, grid, visited): 
+    currValue = grid[i][j]
     neighbours = []
     similarNeighbours = 0 
-    if i > 0 and grid[i][j] == grid[i-1][j]: 
+    nbNewSides = 0 
+    if i > 0 and currValue == grid[i-1][j]: 
         if visited[i-1][j]==0: 
             neighbours.append((i-1,j)) 
         similarNeighbours += 1 
-    if i < len(grid)-1 and grid[i][j] == grid[i+1][j]: 
+    if i < len(grid)-1 and currValue == grid[i+1][j]: 
         if visited[i+1][j]==0: 
             neighbours.append((i+1,j)) 
         similarNeighbours += 1 
-    if j > 0 and grid[i][j] == grid[i][j-1]:
+    if j > 0 and currValue == grid[i][j-1]:
         if visited[i][j-1]==0: 
             neighbours.append((i,j-1)) 
         similarNeighbours += 1 
-    if j < len(grid[0])-1 and grid[i][j] == grid[i][j+1]:  
+    if j < len(grid[0])-1 and currValue == grid[i][j+1]:  
         if visited[i][j+1]==0: 
             neighbours.append((i,j+1)) 
         similarNeighbours += 1 
@@ -43,16 +45,11 @@ def solve(inputfile, puzzlepart):
 
     visited = np.zeros((nrows, ncols))
 
-    plantPlots = []
+    somme = 0
     for i in range(nrows): 
         for j in range(ncols): 
             if visited[i][j]==0: 
                 visited[i][j]=1
                 area, fences, visited = getAreaSizeAndFencing((i,j), lines, visited)
-                plantPlots.append((area, fences))
-    
-    somme = 0 
-    for plantPlot in plantPlots: 
-        area, nbFences = plantPlot
-        somme += area*nbFences
+                somme += area*fences 
     return somme
