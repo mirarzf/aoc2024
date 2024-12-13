@@ -26,8 +26,12 @@ def solve(inputfile, puzzlepart):
             by = int(inputXandY[1][2:])
         if line[:7] == 'Prize: ': 
             inputXandY = line[7:].split(', ')
-            px = int(inputXandY[0][2:])
-            py = int(inputXandY[1][2:])
+            if puzzlepart == 1: 
+                px = int(inputXandY[0][2:])
+                py = int(inputXandY[1][2:])
+            else: # puzzlepart == 2 
+                px = int(inputXandY[0][2:])+10000000000000
+                py = int(inputXandY[1][2:])+10000000000000
             clawMachines.append((ax, ay, bx, by, px, py))
             ax, ay, bx, by, px, py = 0, 0, 0, 0, 0, 0
 
@@ -36,7 +40,8 @@ def solve(inputfile, puzzlepart):
     for i in range(len(clawMachines)): 
         kA, kB = getkAandkB(*clawMachines[i])
         ax, ay, bx, by, px, py = clawMachines[i]
-        if np.floor(kA) == kA and np.floor(kB) == kB and kA*ax + kB*bx == px and kA*ay+kB*by==py and kA <= 100 and kB <= 100: 
+        conditionPuzzlepart = (kA <= 100 and kB <= 100) if puzzlepart == 1 else True 
+        if np.floor(kA) == kA and np.floor(kB) == kB and kA*ax + kB*bx == px and kA*ay+kB*by==py and conditionPuzzlepart: 
             somme += 3*kA + kB
     somme = int(somme)
 
