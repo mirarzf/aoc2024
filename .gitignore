@@ -406,3 +406,7 @@ cppsolutions/*/build
 tempinput.txt
 
 input/day**.txt
+
+# Ignore images 
+*.jpg
+*.png
