@@ -7,6 +7,7 @@ def solve(inputfile, puzzlepart):
     
     posGrid = []
 
+    startPos = (0,0)
     i = 0 
     while lines[i] != '': 
         ncols = len(lines[i])
@@ -16,6 +17,8 @@ def solve(inputfile, puzzlepart):
                 line[j] = 1 
             elif lines[i][j] == '#': 
                 line[j] = 2
+            if lines[i][j] == '@': 
+                startPos = (i,j)
         posGrid.append(line)
         i += 1
     
@@ -34,4 +37,7 @@ def solve(inputfile, puzzlepart):
             elif line[j] == '<': 
                 instrLine.append(3)
         instructions.append(instrLine)
+    
+    print(startPos)
+
     return 0
