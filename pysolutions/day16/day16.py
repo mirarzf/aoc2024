@@ -93,7 +93,7 @@ def solve(inputfile, puzzlepart):
     print(startPos, endPos)
     
     distances, predecessors = Dijkstra(startPos, lines)
-
+    print(len(predecessors))
     # i, j = endPos
     # while (i,j) != startPos: 
     #     print((i,j))
