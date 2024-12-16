@@ -52,7 +52,6 @@ def sumGPScoordinates(grid):
                 somme += 100*i + j
     return somme 
 
-
 def solve(inputfile, puzzlepart): 
     f = open(inputfile, 'r')
     lines = [line.rstrip('\n') for line in f.readlines()]
