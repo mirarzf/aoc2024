@@ -85,16 +85,15 @@ def moveRight(i, j, grid, boxes):
     while k < grid.shape[1]-1 and grid[i, k] > 1: 
         k += 1
     if grid[i, k] == 0: 
-        grid[i, k] = 2
-        grid[i, j+1] = 0
+        # grid[i, k] = 2
+        # grid[i, j+1] = 0
         posRobot = (i, j+1)
-        # prevID = grid[i,j]
-        # nextID = grid[i,j+1]
-        # for kj in range(j+1,k): 
-        #     print(prevID, nextID)
-        #     nextID = grid[i, kj+1]
-        #     grid[i, kj+1] = prevID
-        #     prevID = nextID 
+        prevID = grid[i,j+1]
+        for kj in range(j+2,k+1): 
+            nextID = grid[i, kj+1]
+            print(prevID, nextID)
+            grid[i, kj] = prevID
+            prevID = nextID 
     return posRobot, grid 
 
 def sumGPScoordinates(grid): 
