@@ -10,31 +10,15 @@ def getBoxesToMove(i, j, direction, grid, puzzlepart = 1):
             res.append((grid[i,j+1],i,j+1))
     return res 
 
-# def moveRight(i, j, grid, boxes): 
-#     posRobot = (i,j)
-#     boxesLeftToMove = getBoxesToMove(*posRobot, 'R', grid)
-#     if len(boxesLeftToMove) > 0: 
-#         boxIDtoMove = grid[posRobot]
-#         posRobot = i,j+1
-#     while len(boxesLeftToMove) > 0: 
-#         boxIDtoMove, ki, kj = boxesLeftToMove.pop()
-#         boxesLeftToMove += getBoxesToMove(ki, kj, 'R', grid, puzzlepart = 1)
-#         # Update the boxes dictionary and the grid 
-#         print("inside MoveRight", (ki, kj), boxIDtoMove, grid[ki,kj], boxesLeftToMove)
-#         grid[ki,kj+1] = boxIDtoMove
-#         if boxIDtoMove > 1: 
-#             boxes[boxIDtoMove] = ((ki,kj+1), boxes[boxIDtoMove][1])
-#     grid[posRobot] = 0
-#     return posRobot, grid 
-
 def moveRight(i, j, grid, boxes): 
     posRobot = (i, j)
     k = j+1
     while k < grid.shape[1]-1 and grid[i, k] > 1: 
         k += 1
-    if grid[i, k] == 0: 
+    if k < grid.shape[1]-1 and grid[i, k] == 0: 
         boxesLeftToMove = getBoxesToMove(*posRobot, 'R', grid)
         if len(boxesLeftToMove) > 0: 
+            print(boxesLeftToMove)
             boxIDtoMove = grid[posRobot]
             posRobot = i,j+1
         while len(boxesLeftToMove) > 0: 
@@ -43,9 +27,10 @@ def moveRight(i, j, grid, boxes):
             # Update the boxes dictionary and the grid 
             print("inside MoveRight", (ki, kj), boxIDtoMove, grid[ki,kj+1], boxesLeftToMove)
             grid[ki,kj+1] = boxIDtoMove
+            print(grid[ki, kj+1])
             if boxIDtoMove > 1: 
                 boxes[boxIDtoMove] = ((ki,kj+1), boxes[boxIDtoMove][1])
-    grid[posRobot] = 0
+    grid[posRobot] = 0 
     return posRobot, grid 
 
 
